@@ -1,9 +1,15 @@
 # ROS Noetic base images is 3.52 GB
 FROM osrf/ros:noetic-desktop-full
+ARG ROS_DISTRO=noetic
 
-# Minimal setup
-RUN apt-get update \
- && apt-get install -y locales lsb-release
+COPY requirements.txt .
+
+# Install python dependencies
+RUN apt-get update && \
+    apt-get install -y locales lsb-release python3-pip && \
+    pip3 install --no-cache-dir -r requirements.txt && \
+    apt-get clean
+
 ARG DEBIAN_FRONTEND=noninteractive
 RUN dpkg-reconfigure locales
 
@@ -14,14 +20,16 @@ WORKDIR /catkin_ws
 COPY . /catkin_ws
 
 # Build the ROS workspace
-RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && \
+RUN /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash && \
                  cd /catkin_ws && \
                  echo 'source /opt/ros/noetic/setup.bash' >> /root/.bashrc && \
                  echo 'source /catkin_ws/devel/setup.bash' >> /root/.bashrc"
 
+
+
 # Start ROS Core by default
 # ENTRYPOINT ["roscore"]
-CMD /bin/bash -c "source /opt/ros/noetic/setup.bash && roscore & \
+CMD /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash && roscore & \
                  sleep 5 && \
                  /bin/bash"
 
