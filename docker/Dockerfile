@@ -25,7 +25,9 @@ RUN /bin/bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash && \
                  echo 'source /opt/ros/noetic/setup.bash' >> /root/.bashrc && \
                  echo 'source /catkin_ws/devel/setup.bash' >> /root/.bashrc"
 
-
+# Install ROS packages
+RUN apt-get update && \
+    apt-get install -y ros-noetic-map-server
 
 # Start ROS Core by default
 # ENTRYPOINT ["roscore"]
