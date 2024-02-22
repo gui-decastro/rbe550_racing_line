@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Load docker config
+source docker/docker_config.sh
+
 PWD="$(pwd)"
-IMAGE_NAME="racing_line_img"
 CONTAINER_NAME="RACING_LINE"
 
 # Get container id if it exists
