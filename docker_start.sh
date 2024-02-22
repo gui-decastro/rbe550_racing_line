@@ -16,6 +16,7 @@ if [ -z "${CONTAINER_ID}" ]; then
         -it \
         --privileged \
         --network=host \
+        -e DISPLAY=$DISPLAY \
         -v "${PWD}/catkin_ws:/catkin_ws" \
         --name="${CONTAINER_NAME}" \
         "${IMAGE_NAME}"

@@ -13,6 +13,9 @@ RUN apt-get update && \
 ARG DEBIAN_FRONTEND=noninteractive
 RUN dpkg-reconfigure locales
 
+# Set the DISPLAY environment variable (without it, graphics cannot be displayed inside docker)
+ENV DISPLAY=:0
+
 # Create and set the working directory
 WORKDIR /catkin_ws
 
