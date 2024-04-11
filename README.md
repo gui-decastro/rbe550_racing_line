@@ -41,3 +41,20 @@ You will not need to run this command again once the image is built unless the D
 ./start_docker.sh
 ```
 This bash script will either start a new docker container called RACING_LINE, or attach itself to an existing container if it finds one running. The catkin_ws directory on your local machine is mounted to the catkin_ws directory inside the docker container, so any changes to that directory on your local machine will be reflected inside the docker container.
+
+
+## Running Program
+### Generate an occupancy grid
+Uses a top down image that is located inside the *racetracks* folder, and converts it into a binary occupancy grid. The output is placed in the *occupancy_grids* folder
+```
+cd /catkin_ws/src/map_generator/src/
+python3 generate_map_yaml.py
+```
+
+### Generate waypoints
+Interactively select the desired waypoints for a racetrack. Outputs coordinate pairs of a point on the inside contour and a point on the outside contour.
+```
+cd /catkin_ws/src/map_generator/src/
+python3 generate_waypoints.py
+```
+
