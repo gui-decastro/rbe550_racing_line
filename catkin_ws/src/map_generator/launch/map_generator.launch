@@ -1,0 +1,17 @@
+<launch>
+  <arg name="racetrack_image_path" default="$(find map_generator)/racetracks/track2.yaml"/>
+
+  <node name="generate_map_yaml" pkg="map_generator" type="generate_map_yaml.py" output="screen">
+    <param name="image_path" type="string" value="$(arg racetrack_image_path)"/>
+  </node>
+
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg racetrack_image_path)" />
+</launch>
+
+<!-- <launch>
+  <arg name="racetrack_image_path" default="$(find map_generator)/racetracks/track2.png"/>
+
+  <node name="map_generator_node" pkg="map_generator" type="map_generator_node" output="screen">
+    <param name="image_path" type="string" value="$(arg racetrack_image_path)"/>
+  </node>
+</launch> -->
