@@ -17,7 +17,7 @@
     <!-- <rosparam file="$(find local_planning)/costmap_common_params.yaml" command="load" ns="local_costmap" /> -->
     <rosparam file="$(find local_planning)/params/teb_planner_params.yaml" command="load" />
 
-    <param name="teb_planner_params" value="teb_local_planner/TebLocalPlannerROS" />
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
     <param name="controller_frequency" value="10.0" />
   </node>
 
