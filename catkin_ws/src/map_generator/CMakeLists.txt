@@ -9,6 +9,7 @@ project(map_generator)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   map_server
+  costmap_2d
   rospy
   std_msgs
 )
@@ -105,7 +106,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES map_generator
- CATKIN_DEPENDS map_server rospy std_msgs
+ CATKIN_DEPENDS map_server rospy std_msgs costmap_2d
 #  DEPENDS system_lib
 )
 
