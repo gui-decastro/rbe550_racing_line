@@ -25,7 +25,7 @@ Install the latest version
 ```
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
-## Starting the program
+## Building and Starting Docker
 The next step is to build the docker image that is detailed by the Dockerfile. This docker image uses the ros:noetic-desktop-full image as the base image. You will need aproximately 3.52GB of space in your system.
 
 Listed below are the steps to build the image and start a container.
