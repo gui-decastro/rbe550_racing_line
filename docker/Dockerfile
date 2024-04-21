@@ -10,6 +10,12 @@ RUN apt-get update && \
     pip3 install --no-cache-dir -r requirements.txt && \
     apt-get clean
 
+# Install ros packages
+RUN apt-get update && apt-get install -y \
+    ros-noetic-navigation \
+    ros-noetic-teb-local-planner \
+    ros-noetic-dwa-local-planner
+
 ARG DEBIAN_FRONTEND=noninteractive
 RUN dpkg-reconfigure locales
 
