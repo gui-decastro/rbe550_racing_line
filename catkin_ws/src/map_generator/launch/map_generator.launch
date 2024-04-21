@@ -12,6 +12,16 @@
   </node>
 
   <node name="static_tf0" pkg="tf" type="static_transform_publisher" args="2 0 0 0 0 0 /map /base_link 100"/>
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <!-- <rosparam file="$(find local_planning)/costmap_common_params.yaml" command="load" ns="local_costmap" /> -->
+    <rosparam file="$(find local_planning)/params/teb_planner_params.yaml" command="load" />
+
+    <param name="teb_planner_params" value="teb_local_planner/TebLocalPlannerROS" />
+    <param name="controller_frequency" value="10.0" />
+  </node>
+
+
 </launch>
 
 <!-- <launch>
