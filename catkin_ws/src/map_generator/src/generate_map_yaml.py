@@ -58,7 +58,7 @@ if __name__ == "__main__":
     # image_path = rospy.get_param("~image_path", default="")
     image_path = '/catkin_ws/src/map_generator/racetracks/track2.png'
     print(f"Inside generate_map_yaml.py\nimage_path: {image_path}")
-    resolution = 0.050000
-    origin = [-10.000000, -10.000000, 0.000000]
+    resolution = 0.25000
+    origin = [0.000000, 0.000000, 0.000000]
 
     generate_yaml(image_path, resolution, origin)
