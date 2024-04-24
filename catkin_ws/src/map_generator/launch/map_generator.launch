@@ -22,6 +22,8 @@
     <param name="controller_frequency" value="10.0" />
   </node>
 
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find map_generator)/rviz/racetrack_rviz.rviz"/>
+
 
 </launch>
 
