@@ -52,43 +52,48 @@ orientation_data = [
 rospy.sleep(5) # add this or else first iteration of for loop doenst publish anything
 
 # every iteration sets waypoints[i] as initial pose, and waypoints[i+1] as goal pose
-for i in range(len(waypoints)-1):
-    print(i)
-    x_start_image_coords = (waypoints[i][0][0]+waypoints[i][1][0])/2
-    y_start_image_coords = (waypoints[i][0][1]+waypoints[i][1][1])/2
+# for i in range(len(waypoints)-1):
+i = 0
+print(i)
+x_start_image_coords = (waypoints[i][0][0]+waypoints[i][1][0])/2
+y_start_image_coords = (waypoints[i][0][1]+waypoints[i][1][1])/2
 
-    start.pose.pose.position.x = x_start_image_coords * resolution
-    start.pose.pose.position.y = (racetrack_image_height - y_start_image_coords) * resolution
-    start.pose.pose.position.z = 0.0
+start.pose.pose.position.x = x_start_image_coords * resolution
+start.pose.pose.position.y = (racetrack_image_height - y_start_image_coords) * resolution
+start.pose.pose.position.z = 0.36
+print(f"start {start.pose.pose}")
 
-    start_orientation = orientation_data[i]
-    print(f"start {start_orientation}")
-    start.pose.pose.orientation.x = start_orientation['x']
-    start.pose.pose.orientation.y = start_orientation['y']
-    start.pose.pose.orientation.z = start_orientation['z']
-    start.pose.pose.orientation.w = start_orientation['w']
-    start_pub.publish(start)
+start_orientation = orientation_data[i]
+start.pose.pose.orientation.x = start_orientation['x']
+start.pose.pose.orientation.y = start_orientation['y']
+start.pose.pose.orientation.z = start_orientation['z']
+start.pose.pose.orientation.w = start_orientation['w']
+start_pub.publish(start)
 
+goal_index = -1
 
-    # The waypoints come as coordinates from an opencv image. A conversion needs to be done to convert it to map coordinates
-    x_goal_image_coords = (waypoints[i+1][0][0]+waypoints[i+1][1][0])/2
-    y_goal_image_coords = (waypoints[i+1][0][1]+waypoints[i+1][1][1])/2
+# The waypoints come as pair of coordinates from an opencv image representing the outer countour and inner countour. 
+# A conversion needs to be done to convert it to map coordinates
+# x_goal_image_coords = (waypoints[i+1][0][0]+waypoints[i+1][1][0])/2
+# y_goal_image_coords = (waypoints[i+1][0][1]+waypoints[i+1][1][1])/2
+x_goal_image_coords = (waypoints[goal_index][0][0]+waypoints[goal_index][1][0])/2
+y_goal_image_coords = (waypoints[goal_index][0][1]+waypoints[goal_index][1][1])/2
 
-    goal.pose.position.x = x_goal_image_coords * resolution
-    goal.pose.position.y = (racetrack_image_height - y_goal_image_coords) * resolution
-    goal.pose.position.z = 0.0
+goal.pose.position.x = x_goal_image_coords * resolution
+goal.pose.position.y = (racetrack_image_height - y_goal_image_coords) * resolution
+goal.pose.position.z = 0.36
 
-    goal_orientation = orientation_data[i+1]
-    print(f"goal {goal_orientation}")
-    goal.pose.orientation.x = goal_orientation['x']
-    goal.pose.orientation.y = goal_orientation['y']
-    goal.pose.orientation.z = goal_orientation['z']
-    goal.pose.orientation.w = goal_orientation['w']
+goal_orientation = orientation_data[goal_index]
+print(f"goal {goal_orientation}")
+goal.pose.orientation.x = goal_orientation['x']
+goal.pose.orientation.y = goal_orientation['y']
+goal.pose.orientation.z = goal_orientation['z']
+goal.pose.orientation.w = goal_orientation['w']
 
-    goal_pub.publish(goal)
+goal_pub.publish(goal)
 
-    print(f"({start.pose.pose.position.x},{start.pose.pose.position.y}) -> ({goal.pose.position.x},{goal.pose.position.x})")
-    rospy.sleep(5)
+print(f"({start.pose.pose.position.x},{start.pose.pose.position.y}) -> ({goal.pose.position.x},{goal.pose.position.x})")
+rospy.sleep(5)
 
 print("List of waypoints complete")
     
