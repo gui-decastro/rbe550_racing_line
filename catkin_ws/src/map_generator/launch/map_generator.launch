@@ -6,6 +6,33 @@
   </node>
 
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg racetrack_image_path)" />
+
+  <node name="costmap_node" pkg="costmap_2d" type="costmap_2d_node">
+      <rosparam file="$(find map_generator)/costmap/costmap.yaml" command="load" ns="costmap"/>
+  </node>
+
+  <arg name="start_x" default="74.0" />
+  <arg name="start_y" default="45.125" />
+  <arg name="start_z" default="0.36" />
+  <arg name="start_quat_z" default="1" />
+  <arg name="start_quat_w" default="0" />
+  <node name="static_tf0" pkg="tf" type="static_transform_publisher" args="$(arg start_x) $(arg start_y) $(arg start_z) 0 0 $(arg start_quat_z) $(arg start_quat_w) /map /base_link 100"/>
+  
+  <!-- Launch audibot -->
+  <include file="$(find audibot_gazebo)/launch/audibot_racing_line.launch"/>
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find map_generator)/costmap/costmap.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find map_generator)/costmap/costmap.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find local_planning)/params/teb_planner_params.yaml" command="load" />
+
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <param name="controller_frequency" value="10.0" />
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find map_generator)/rviz/racetrack_rviz.rviz"/>
+
+
 </launch>
 
 <!-- <launch>
