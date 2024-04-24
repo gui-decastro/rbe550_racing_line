@@ -11,7 +11,15 @@
       <rosparam file="$(find map_generator)/costmap/costmap.yaml" command="load" ns="costmap"/>
   </node>
 
-  <node name="static_tf0" pkg="tf" type="static_transform_publisher" args="2 0 0 0 0 0 /map /base_link 100"/>
+  <arg name="start_x" default="74.0" />
+  <arg name="start_y" default="45.125" />
+  <arg name="start_z" default="0.36" />
+  <arg name="start_quat_z" default="1" />
+  <arg name="start_quat_w" default="0" />
+  <node name="static_tf0" pkg="tf" type="static_transform_publisher" args="$(arg start_x) $(arg start_y) $(arg start_z) 0 0 $(arg start_quat_z) $(arg start_quat_w) /map /base_link 100"/>
+  
+  <!-- Launch audibot -->
+  <include file="$(find audibot_gazebo)/launch/audibot_racing_line.launch"/>
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find map_generator)/costmap/costmap.yaml" command="load" ns="local_costmap" />
