@@ -1,0 +1,15 @@
+base_global_planner: global_planner/GlobalPlanner
+base_local_planner: base_local_planner/TrajectoryPlannerROS
+
+GlobalPlanner:
+ use_dijkstra: true
+
+
+
+TrajectoryPlannerROS:
+
+ odom_topic: odom
+ map_frame: /map
+
+ meter_scoring: True
+ dwa: True
