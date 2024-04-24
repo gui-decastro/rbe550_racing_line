@@ -24,9 +24,9 @@
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find map_generator)/costmap/costmap.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find map_generator)/costmap/costmap.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find local_planning)/params/teb_planner_params.yaml" command="load" />
-
-    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <!-- <rosparam file="$(find local_planning)/params/teb_planner_params.yaml" command="load" /> -->
+    <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+    <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
     <param name="controller_frequency" value="10.0" />
   </node>
 
