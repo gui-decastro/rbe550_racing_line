@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 
+# Imports
 # import rospy
 import cv2 as cv
 import numpy as np
 import yaml
 import os
 
+
 def preprocess_image(image_path):
+    """
+    Processes the image using color thresholding.
+    """
     # Load the image
     image = cv.imread(image_path, cv.IMREAD_GRAYSCALE)
     # cv.imshow("preprocessed_image", image)
@@ -28,9 +33,13 @@ def preprocess_image(image_path):
     processed_image_path = "/catkin_ws/src/map_generator/occupancy_grids/track2_occ_grid.png"
     cv.imwrite(processed_image_path, final_image)
 
+    # Return image and path
     return image, processed_image_path
 
 def generate_yaml(image_path, resolution, origin):
+    """
+    Create yaml file for map details
+    """
     # Preprocess the image
     processed_image, processed_image_path = preprocess_image(image_path)
 
@@ -52,6 +61,9 @@ def generate_yaml(image_path, resolution, origin):
         yaml.dump(yaml_data, yaml_file, default_flow_style=False)
 
 if __name__ == "__main__":
+    """
+    Main function
+    """
     # for debugging:
     print(f"Current Working Directory: {os.getcwd()}")
 
