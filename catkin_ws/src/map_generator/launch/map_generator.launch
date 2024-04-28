@@ -13,7 +13,7 @@
   <!-- Launch audibot -->
   <include file="$(find audibot_gazebo)/launch/audibot_racing_line.launch"/>
 
-  <!-- Create node for mvoe_base -->
+  <!-- Create node for move_base -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <!-- Global Costmap -->
     <rosparam file="$(find map_generator)/costmap/costmap_common_params.yaml" command="load" ns="global_costmap" />
@@ -24,19 +24,12 @@
     <rosparam file="$(find map_generator)/costmap/local_costmap_params.yaml" command="load" />
     <!-- <rosparam file="$(find local_planning)/params/teb_planner_params.yaml" command="load" /> -->
 
-    <!-- <param name="base_global_planner" value="global_planner/GlobalPlanner" /> -->
-
-    <!-- Global Planners. Leave one uncommented -->
-    <!-- A* -->
-    <param name="base_global_planner" value="global_planner/GlobalPlanner" />
-    <!-- Djikstra's (doesnt work yet)-->
-    <!-- <param name="base_global_planner" value="navfn/NavfnROS" /> -->
-    <!-- RRT* (explore more later, this launches but cant find a solution) -->
-    <!-- <param name="base_global_planner" value="carrot_planner/CarrotPlanner" /> -->
+    <!-- Global Planners -->
+    <param name="base_global_planner" value="global_planner/GlobalPlanner" /> <!-- Djikstra's -->
 
     <!-- Local Planners -->
-    <rosparam file="$(find local_planning)/params/base_local_planner_ackermann_params.yaml" command="load" />
-    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <!-- <rosparam file="$(find local_planning)/params/base_local_planner_ackermann_params.yaml" command="load" /> -->
+
 
 
     <!-- <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" /> -->
@@ -44,7 +37,9 @@
   </node>
 
   <!-- Full RViz instance with map, audibot, goal pose, and paths -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find map_generator)/rviz/racetrack_rviz.rviz"/>
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find map_generator)/rviz/racetrack_rviz.rviz"/> -->
+  <!-- Show local planner info -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find map_generator)/rviz/local_plan.rviz"/> 
   <!-- Simple RViz instance with just the map -->
   <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find map_generator)/rviz/map.rviz"/> -->
 
