@@ -28,7 +28,7 @@
     <param name="base_global_planner" value="global_planner/GlobalPlanner" /> <!-- Djikstra's -->
 
     <!-- Local Planners -->
-    <!-- <rosparam file="$(find local_planning)/params/base_local_planner_ackermann_params.yaml" command="load" /> -->
+    <rosparam file="$(find local_planning)/params/base_local_planner_ackermann_params.yaml" command="load" />
 
 
 
