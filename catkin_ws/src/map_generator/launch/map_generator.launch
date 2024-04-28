@@ -30,15 +30,11 @@
     <param name="controller_frequency" value="10.0" />
   </node>
 
+  <!-- Full RViz instance with map, audibot, goal pose, and paths -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find map_generator)/rviz/racetrack_rviz.rviz"/>
+  <!-- Simple RViz instance with just the map -->
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find map_generator)/rviz/map.rviz"/> -->
 
 
 </launch>
 
-<!-- <launch>
-  <arg name="racetrack_image_path" default="$(find map_generator)/racetracks/track2.png"/>
-
-  <node name="map_generator_node" pkg="map_generator" type="map_generator_node" output="screen">
-    <param name="image_path" type="string" value="$(arg racetrack_image_path)"/>
-  </node>
-</launch> -->
