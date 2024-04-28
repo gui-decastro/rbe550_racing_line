@@ -1,15 +1,19 @@
 <launch>
+  <!-- Set racetrack details -->
   <arg name="racetrack_image_path" default="$(find map_generator)/racetracks/track2.yaml"/>
 
+  <!-- Create node for map generation  -->
   <node name="generate_map_yaml" pkg="map_generator" type="generate_map_yaml.py" output="screen">
     <param name="image_path" type="string" value="$(arg racetrack_image_path)"/>
   </node>
 
+  <!-- Create node for map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg racetrack_image_path)" />
   
   <!-- Launch audibot -->
   <include file="$(find audibot_gazebo)/launch/audibot_racing_line.launch"/>
 
+  <!-- Create node for mvoe_base -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <!-- Global Costmap -->
     <rosparam file="$(find map_generator)/costmap/costmap_common_params.yaml" command="load" ns="global_costmap" />
