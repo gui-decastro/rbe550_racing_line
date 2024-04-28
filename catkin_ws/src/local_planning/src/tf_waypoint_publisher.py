@@ -4,11 +4,17 @@ import rospy
 import tf
 from nav_msgs.msg import Path
 from geometry_msgs.msg import TransformStamped
+from nav_msgs.msg import Odometry
 import math
 
 class WaypointTFPublisher:
     def __init__(self, velocity):
         self.velocity = velocity
+        self.odom_pub = rospy.Publisher('/odom', Odometry, queue_size=10)
+        self.odom = Odometry()
+        self.odom.header.stamp = rospy.Time.now()
+        self.odom.header.frame_id = 'map'  # Assuming your initial pose is in the map frame
+
         self.tf_broadcaster = tf.TransformBroadcaster()
         self.waypoints = []
 
@@ -44,17 +50,30 @@ class WaypointTFPublisher:
                 rate = rospy.Rate(self.velocity / distance)
 
                 self.tf_broadcaster.sendTransform(
-                    (p1.pose.position.x, p1.pose.position.y, p1.pose.position.z),
+                    (p1.pose.position.x, p1.pose.position.y, p1.pose.position.z+0.36),
                     (p1.pose.orientation.x, p1.pose.orientation.y, p1.pose.orientation.z, p1.pose.orientation.w),
                     rospy.Time.now(),
                     "base_link",
                     "map"
                 )
+                
+                # Publish curr robot pose to /odom
+                self.odom.pose.pose.position.x = p1.pose.position.x
+                self.odom.pose.pose.position.y = p1.pose.position.y
+                self.odom.pose.pose.position.z = 0.36
+
+                self.odom.pose.pose.orientation.x = p1.pose.orientation.x
+                self.odom.pose.pose.orientation.y = p1.pose.orientation.y
+                self.odom.pose.pose.orientation.z = p1.pose.orientation.z
+                self.odom.pose.pose.orientation.w = p1.pose.orientation.w
+
+                self.odom_pub.publish(self.odom)
+
                 rate.sleep()
 
 def main():
     rospy.init_node('tf_publisher')
-    velocity = 7
+    velocity = 30
 
     tf_publisher = WaypointTFPublisher(velocity)
     rospy.Subscriber("/move_base/GlobalPlanner/plan", Path, tf_publisher.path_callback)

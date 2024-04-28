@@ -1,0 +1,4 @@
+footprint: [[1, 1], [-1, 1], [1, -1], [-1, -1]]
+inflation_radius: 0.5
+
+map_type: costmap

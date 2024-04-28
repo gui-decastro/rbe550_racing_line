@@ -1,0 +1,36 @@
+global_costmap:
+  global_frame: map
+  robot_base_frame: base_footprint
+  update_frequency: 1.0 # Frequency of updating the costmap. Upon bootup, it will take 1/freq to create the costmap
+  publish_frequency: 0.1 #
+  static_map: true
+  transform_tolerance: 0.5
+  cost_scaling_factor: 10.0
+  inflation_radius: 2.0
+
+# global_costmap:
+#   global_costmap:
+#     ros__parameters:
+#       update_frequency: 1.0
+#       publish_frequency: 1.0
+#       global_frame: map
+#       robot_base_frame: base_footprint
+#       use_sim_time: True
+#       footprint: "[ [3,-2],[-3,-2],[-3,2],[3,2] ]"
+#       footprint_padding: 0.0
+#       resolution: 0.25
+#       track_unknown_space: False
+#       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+#       filters: ["keepout_filter"]
+#       keepout_filter:
+#         plugin: "nav2_costmap_2d::KeepoutFilter"
+#         enabled: True
+#         filter_info_topic: "/costmap_filter_info"
+#       static_layer:
+#         plugin: "nav2_costmap_2d::StaticLayer"
+#         map_subscribe_transient_local: True
+#       inflation_layer:
+#         plugin: "nav2_costmap_2d::InflationLayer"
+#         cost_scaling_factor: 5.0
+#         inflation_radius: 15.0
+#       always_send_full_costmap: True
