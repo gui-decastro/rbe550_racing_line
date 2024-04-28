@@ -1,10 +1,14 @@
+# Imports
 import cv2
 import numpy as np
 import os
 import pickle
 
-# 
+
 def findRacetrackContours(racetrack_filename):
+    """
+    Find the inner and outer contours of the racetrack.
+    """
     # Read the binary occupancy grid image (cv.findContours only works with a binary image)
     binary_image = cv2.imread(racetrack_filename, cv2.IMREAD_GRAYSCALE)
     # draw two lines on right and left side of the finish line to complete the racetrack and create a continous inner and outer contour
@@ -29,9 +33,13 @@ def findRacetrackContours(racetrack_filename):
 
     debugging = False # set to True to help find the correct thresholds to generate an inner and outer contour
 
+    # Set parameters 
     threshold_area = 100000
     min_area = 1000
+
+    # Iterate through contours
     for contour in contours:
+        # Create contour area
         area = cv2.contourArea(contour)
         
         # debug to find the perimeters experimentally
@@ -43,7 +51,7 @@ def findRacetrackContours(racetrack_filename):
             cv2.waitKey(0)
             cv2.destroyAllWindows()
         
-        # classify the 
+        # Classify area by size
         if area < min_area:
             continue
         elif area < threshold_area:  # You need to define the threshold area based on your image and requirements
@@ -71,10 +79,14 @@ def findRacetrackContours(racetrack_filename):
     cv2.drawContours(racetrack_image, inner_contour, -1, (0, 255, 0), 2)  # Draw inner contours in green
     cv2.drawContours(racetrack_image, outer_contour, -1, (0, 0, 255), 2)  # Draw outer contours in red
 
+    # Return track image and contours
     return racetrack_image, inner_contour, outer_contour
 
-# Helper func to rearrange the contour line so that index 0 is at the start line and last index is at the finish line
+
 def rearrange_contour(contour, startline_coord, contour_side):
+    """
+    Helper function to rearrange the contour lines such that start and finish line are the first and last index.
+    """
     # Convert to a numpy array to facilitate array manipulation
     contour_array = np.array(contour)
 
@@ -88,10 +100,15 @@ def rearrange_contour(contour, startline_coord, contour_side):
     if contour_side == 'outer':
         contour = contour[::-1]
 
+    # Return contours
     return contour
 
-# Allow user to select points on the outer contour of the racetrack to define the waypoints
+# 
 def select_waypoints(racetrack_image, inner_contour, outer_contour, track_name):
+    """
+    Interactively select points on racetrack to define waypoints.
+    """
+    # Set variable
     global clicked_point
     clicked_point = None
 
@@ -119,8 +136,9 @@ def select_waypoints(racetrack_image, inner_contour, outer_contour, track_name):
     cv2.putText(image_with_drawings, text2, position2, font, font_scale, color, thickness)
     cv2.putText(image_with_drawings, text3, position3, font, font_scale, color, thickness)
 
-    # Main loop to handle mouse events and draw on the image
+    # Instantiate empty list
     waypoints = []
+    # While waypoints are being defined
     while True:
 
         # Draw the clicked point if available
@@ -138,9 +156,11 @@ def select_waypoints(racetrack_image, inner_contour, outer_contour, track_name):
             # Draw a line connecting the points on the outer and inner edge to create a waypoint (line)
             cv2.line(image_with_drawings, tuple(closest_outer_point), tuple(closest_inner_point), (255, 0, 0), 2)  # Yellow line between points
 
+            # Append to waypoint list
             waypoints.append((closest_outer_point, closest_inner_point))
 
-            clicked_point = None # reset flag and await for next click event
+            # reset flag and await for next click event
+            clicked_point = None 
 
         # Show the updated image
         cv2.imshow('Interactive Racetrack Image', image_with_drawings)
@@ -149,6 +169,7 @@ def select_waypoints(racetrack_image, inner_contour, outer_contour, track_name):
         key = cv2.waitKey(1) & 0xFF
         if key == ord('s'):
             print("Saving waypoints")
+            # Call function to save waypoints
             save_waypoints(waypoints, track_name)
             break
         elif key == 27:  # Press Esc key to exit
@@ -158,21 +179,28 @@ def select_waypoints(racetrack_image, inner_contour, outer_contour, track_name):
     # Clean up
     cv2.destroyAllWindows()
 
-# Mouse callback function
-def mouse_callback(event, x, y, flags, param):
-    global clicked_point
 
+def mouse_callback(event, x, y, flags, param):
+    """
+    Callback function for mouse click on OpenCV window.
+    """
+    global clicked_point
+    # If left-mouse-button click is detected
     if event == cv2.EVENT_LBUTTONDOWN:
+        # Extract point
         clicked_point = (x, y)
         print(f'clicked point: {clicked_point}')
 
-# save the selected waypoints into a unique file
+
 def save_waypoints(waypoints, track_name):
+    """
+    Save selected waypoints into a file.
+    """
     # Define the file path
     base_filename = 'waypoints_data'
     extension = '.pickle'
 
-    # generate a unique filename to store the waypoint data
+    # Generate a unique filename
     index = 1
     while True:
         filename = f"{track_name}_{base_filename}({index}){extension}"
@@ -180,17 +208,21 @@ def save_waypoints(waypoints, track_name):
             break
         index += 1
 
-    # Save the waypoints data to the pickle file
+    # Save waypoints data to the pickle file
     with open(filename, 'wb') as file:
         pickle.dump(waypoints, file)
 
     print(f"Waypoints data saved to {filename}")
 
 if __name__ == "__main__":
+    """
+    Main function.
+    """
+    # Set track name and path
     track_name = 'track2'
     racetrack_filename = f'../occupancy_grids/{track_name}_occ_grid.png'
-
+    
+    # Find countours
     racetrack_image, inner_contour, outer_contour = findRacetrackContours(racetrack_filename)
-
     # Interactively select and save the waypoints
     select_waypoints(racetrack_image, inner_contour, outer_contour, track_name)
