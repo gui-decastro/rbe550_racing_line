@@ -21,6 +21,7 @@ goal_pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
 r = rospy.Rate(10) # 10hz
 goal = PoseStamped()
 
+# Set header of goal message
 goal.header.seq = 1
 goal.header.stamp = rospy.Time.now()
 goal.header.frame_id = "map"
@@ -49,10 +50,12 @@ orientation_data = [
 
 # print(waypoints)
 # while not rospy.is_shutdown():
+
 rospy.sleep(5) # add this or else first iteration of for loop doenst publish anything
 
 # every iteration sets waypoints[i] as initial pose, and waypoints[i+1] as goal pose
 # for i in range(len(waypoints)-1):
+
 i = 0
 print(i)
 x_start_image_coords = (waypoints[i][0][0]+waypoints[i][1][0])/2

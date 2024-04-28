@@ -1,7 +1,7 @@
+# Imports
 import pickle
 import rospy
 from nav_msgs.msg import Odometry
-
 
 # Define parameters to convert image coordinates to /map coordinates
 racetrack_image_width = 940
@@ -17,14 +17,7 @@ start.header.stamp = rospy.Time.now()
 start.header.frame_id = 'map'  # Assuming your initial pose is in the map frame
 
 # Define goal publisher
-# goal_pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
 r = rospy.Rate(10) # 10hz
-# goal = PoseStamped()
-
-# goal.header.seq = 1
-# goal.header.stamp = rospy.Time.now()
-# goal.header.frame_id = "map"
-
 
 # Import waypoint data
 file_path = "waypoints3.pickle"
@@ -47,8 +40,7 @@ orientation_data = [
     {'x': 0.0, 'y': 0.0, 'z': 0.9999049248336904, 'w': 0.013789173047426002}
 ]
 
-# print(waypoints)
-# while not rospy.is_shutdown():
+# Sleep 
 rospy.sleep(5) # add this or else first iteration of for loop doenst publish anything
 
 # every iteration sets waypoints[i] as initial pose, and waypoints[i+1] as goal pose
@@ -109,6 +101,3 @@ while not rospy.is_shutdown():
 
 # print(f"({start.pose.pose.position.x},{start.pose.pose.position.y}) -> ({goal.pose.position.x},{goal.pose.position.x})")
 rospy.sleep(1)
-
-    
-# rospy.sleep(5)
