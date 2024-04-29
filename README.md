@@ -35,6 +35,7 @@ Listed below are the steps to build the image and start a container.
 # Start at the project's root folder
 cd docker
 ./docker_build.sh
+cd ..
 ```
 This creates a docker image called "racing_line_img". You will not need to run this command again once the image is built unless the Dockerfile is updated. Docker runs every command in the Dockerfile inside its own shell and it stores them in its cache, so only the changed/new commands will be rebuilt with a new docker build command, meaning it will be faster than building the image from scratch.
 
@@ -45,7 +46,13 @@ This creates a docker image called "racing_line_img". You will not need to run t
 This bash script will either start a new docker container called RACING_LINE, or attach itself to an existing container if it finds one running. The catkin_ws directory on your local machine is mounted to the catkin_ws directory inside the docker container, so any changes to that directory on your local machine will be reflected inside the docker container.
 
 ## Running the Racing Line Simulation
-Once inside the docker container, launch the program's main launch file which generates the racetrack map which is used for all path planning. Additionally, this launcher will start up RViz, bring up the Audibot robot, and initialize the move_base node which will handle all navigation, including the global and local planners. This launcher is well documented and so are the yaml files containing parameters configuration. The very bottom of the launcher has a few RViz instances that can be chosen from depending on the use case, including a configuration for just the maps, the planners, or the entire simulation. Be mindful of the the RViz Display checkboxes, and toggle them as needed.
+Once inside the docker container, build and activate the ROS workspace
+```
+catkin_make
+source devel/setup.bash
+```
+
+Now launch the program's main launch file which generates the racetrack map which is used for all path planning. Additionally, this launcher will start up RViz, bring up the Audibot robot, and initialize the move_base node which will handle all navigation, including the global and local planners. This launcher is well documented and so are the yaml files containing parameters configuration. The very bottom of the launcher file lists a few RViz instances that can be chosen from depending on the use case, including a configuration for just the maps, the planners, or the entire simulation. Be mindful of the the RViz Display checkboxes, and toggle them as needed.
 ```
 roslaunch map_generator map_generator.launch
 ```
