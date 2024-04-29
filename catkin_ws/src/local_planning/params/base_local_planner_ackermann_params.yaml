@@ -1,0 +1,78 @@
+base_local_planner: teb_local_planner/TebLocalPlannerROS
+
+TebLocalPlannerROS:
+
+ # Set topic
+ odom_topic: /odom
+ # Set frame
+ map_frame: /map
+
+ # Trajectory parameters
+ teb_autosize: True
+ dt_ref: 0.3
+ dt_hysteresis: 0.1
+ global_plan_overwrite_orientation: True
+ max_global_plan_lookahead_dist: 50.0
+ feasibility_check_no_poses: 5
+ publish_feedback: True
+
+ # Robot constraints
+ cmd_angle_instead_rotvel: True
+ max_vel_x: 55 # assuming max speed of 125mph
+ max_vel_x_backwards: 0.2
+ max_vel_theta: 0.5
+ acc_lim_x: 8 # 0 to 60mph in 3 seconds. Acceleration of 8.94m/s^2
+ acc_lim_theta: 1.0 # how quickly the steering rate can change
+ min_turning_radius: 2.3 # using 30deg as the max steering angle. Min_Turning_Radius = wheelbase / tan(max_steering_angle_rad) 
+ wheelbase: 2.65 # from audibot URDF
+ footprint_model:
+  #  type: "polygon"
+  #  vertices: [[4, 1.25], [4, -1.25], [-0.9, -1.25], [-0.9, 1.25]] # closed polygon
+  type: "line" # computationally advantageous compared to polygon. Polygon should be avoid at all costs for local planner
+  line_start: [0,0] # line_start and line_end define the two points of the line. min_obstacle_distance defines a radius around these two points for the robot to avoid
+  line_end: [3.5, 0]
+
+ # Goal tolerance parameters
+ xy_goal_tolerance: 1
+ yaw_goal_tolerance: 0.7
+ free_goal_vel: True # Remove the goal velocity constraint such that the robot can arrive at the goal with maximum speed. Should probably be true for this project. Check later
+
+ # Obstacles parameters
+ min_obstacle_dist: 1.25
+ include_costmap_obstacles: True
+ costmap_obstacles_behind_robot_dist: 0.1
+ obstacle_poses_affected: 5
+ costmap_converter_plugin: ""
+ costmap_converter_spin_thread: False
+ costmap_converter_rate: 0
+
+ # Optimization parameters
+ no_inner_iterations: 5
+ no_outer_iterations: 4
+ optimization_activate: True
+ optimization_verbose: False
+ penalty_epsilon: 0.1
+ weight_max_vel_x: 5 # Optimization weight for satisfying the maximum allowed translational velocity
+ weight_max_vel_theta: 1
+ weight_acc_lim_x: 5 # Optimization weight for satisfying the maximum allowed translational acceleration
+ weight_acc_lim_theta: 1
+ weight_kinematics_nh: 1000
+ weight_kinematics_forward_drive: 1
+ weight_kinematics_turning_radius: 1
+ weight_optimaltime: 10 # Optimization weight for contracting the trajectory w.r.t transition/execution time. Most important param for racing line!
+ weight_obstacle: 50
+ weight_dynamic_obstacle: 10 # not in use yet
+ alternative_time_cost: False # not in use yet
+
+ # Homotopy Class Planner params
+ enable_homotopy_class_planning: False
+ enable_multithreading: False
+ simple_exploration: False
+ max_number_classes: 4
+ roadmap_graph_no_samples: 15
+ roadmap_graph_area_width: 5
+ h_signature_prescaler: 0.5
+ h_signature_threshold: 0.1
+ obstacle_keypoint_offset: 0.1
+ obstacle_heading_threshold: 0.45
+visualize_hc_graph: False

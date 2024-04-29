@@ -1,0 +1,31 @@
+global_costmap:
+  # Read comments in local_costmap_params.yaml for more info on how these work
+
+  global_frame: map
+  robot_base_frame: base_footprint
+  update_frequency: 1.0 # Frequency of updating the costmap. Upon bootup, it will take 1/freq to create the costmap
+  publish_frequency: 0.0 #
+  
+  static_map: true
+  transform_tolerance: 0.5
+
+  plugins:
+    - {name: static_layer, type: "costmap_2d::StaticLayer"}
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"}
+
+  static_layer:
+    enabled: true
+    map_topic: "/map"
+
+  # Edit the inflation layer to define the costmap for the global planner to solve. This results in significant change to the path
+  inflation_layer:
+    enabled: true
+    # Choose only one config to get a desired path
+
+    ## Config 1: Find a path that is optimal based on distance traveled
+    # cost_scaling_factor: 10.0 # the lower the number, the higher the cost of being the inflation zone, and the avoid it harder
+    # inflation_radius: 1.5 # how much to inflate around the edges ()
+    
+    ## Config 2: Stay close to the centerline of the track
+    cost_scaling_factor: 0.1 # the lower the number, the higher the cost of being the inflation zone, and the avoid it harder
+    inflation_radius: 4.0 # how much to inflate around the edges ()

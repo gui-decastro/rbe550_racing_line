@@ -1,0 +1,34 @@
+local_costmap:
+  # this creates rosparams in the form of /namespace_labeled_above_aka_local_costmap/next/level/next/ and so on
+  # From launcher:
+  # - when launched from the launcher, /move_base is automatically appended to the front. Ex: /move_base/local_costmap/rolling_window
+  # From command line: 
+  # - when loading from cmd line using rosparam load, manually add /move_base as the name space parameter like so: rosparam load local_costmap_params.yaml
+  # - use the -v flag for the params to be printed to the screen so you can validate that the correct format is being loaded
+
+  # Unresolved: sometimes the value set in costmap_common_params.yaml will stick. Even when you relaunch map_generator,
+  # the PARAMETERs list from the launcher say that it took these values, but rosparam get <param> outputs the original value from common_params.yaml
+
+  global_frame: map # no need for odom since we always know where audibot is
+  robot_base_frame: base_footprint
+  update_frequency: 1.0
+  publish_frequency: 0.0
+  
+  static_map: true
+  rolling_window: false
+  width: 100.0
+  height: 100.0
+  resolution: 0.25
+
+  plugins:
+    - {name: static_layer, type: "costmap_2d::StaticLayer"}
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"}
+
+  static_layer:
+    enabled: true
+    map_topic: "/map"
+
+  inflation_layer:
+    enabled: true
+    cost_scaling_factor: 2.0 # the lower the number, the higher the cost of being the inflation zone, and the avoid it harder
+    inflation_radius: 1.5 # how much to inflate around the edges (set this to a little more than half the car width)
