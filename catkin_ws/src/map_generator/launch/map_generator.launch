@@ -22,17 +22,13 @@
     <!-- Local Costmap -->
     <rosparam file="$(find map_generator)/costmap/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find map_generator)/costmap/local_costmap_params.yaml" command="load" />
-    <!-- <rosparam file="$(find local_planning)/params/teb_planner_params.yaml" command="load" /> -->
 
     <!-- Global Planners -->
     <param name="base_global_planner" value="global_planner/GlobalPlanner" /> <!-- Djikstra's -->
 
-    <!-- Local Planners -->
+    <!-- Local Planners - with Ackermann kinematic model -->
     <rosparam file="$(find local_planning)/params/base_local_planner_ackermann_params.yaml" command="load" />
 
-
-
-    <!-- <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" /> -->
     <param name="controller_frequency" value="5.0" />
   </node>
 

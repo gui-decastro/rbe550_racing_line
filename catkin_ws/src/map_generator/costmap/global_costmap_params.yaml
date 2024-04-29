@@ -4,7 +4,7 @@ global_costmap:
   global_frame: map
   robot_base_frame: base_footprint
   update_frequency: 1.0 # Frequency of updating the costmap. Upon bootup, it will take 1/freq to create the costmap
-  publish_frequency: 0.5 #
+  publish_frequency: 0.0 #
   
   static_map: true
   transform_tolerance: 0.5
@@ -23,7 +23,7 @@ global_costmap:
     # Choose only one config to get a desired path
 
     ## Config 1: Find a path that is optimal based on distance traveled
-    # cost_scaling_factor: 2.0 # the lower the number, the higher the cost of being the inflation zone, and the avoid it harder
+    # cost_scaling_factor: 10.0 # the lower the number, the higher the cost of being the inflation zone, and the avoid it harder
     # inflation_radius: 1.5 # how much to inflate around the edges ()
     
     ## Config 2: Stay close to the centerline of the track

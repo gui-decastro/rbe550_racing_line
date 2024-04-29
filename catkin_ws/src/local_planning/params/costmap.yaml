@@ -1,4 +1,0 @@
-# Configure costmap
-plugins: 
-    - {name: static_map,       type: "costmap_2d::StaticLayer"}
-publish_frequency: 1.0
