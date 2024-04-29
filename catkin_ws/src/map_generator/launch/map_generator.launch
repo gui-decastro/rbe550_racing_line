@@ -24,7 +24,7 @@
     <rosparam file="$(find map_generator)/costmap/local_costmap_params.yaml" command="load" />
 
     <!-- Global Planners -->
-    <param name="base_global_planner" value="global_planner/GlobalPlanner" /> <!-- Djikstra's -->
+    <rosparam file="$(find local_planning)/params/base_global_planner_params.yaml" command="load" />
 
     <!-- Local Planners - with Ackermann kinematic model -->
     <rosparam file="$(find local_planning)/params/base_local_planner_ackermann_params.yaml" command="load" />
