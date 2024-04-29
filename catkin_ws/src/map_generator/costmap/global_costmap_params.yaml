@@ -23,8 +23,8 @@ global_costmap:
     # Choose only one config to get a desired path
 
     ## Config 1: Find a path that is optimal based on distance traveled
-    # cost_scaling_factor: 10.0 # the lower the number, the higher the cost of being the inflation zone, and the avoid it harder
-    # inflation_radius: 1.5 # how much to inflate around the edges ()
+    # cost_scaling_factor: 0.1 # the lower the number, the higher the cost of being the inflation zone, and the avoid it harder
+    # inflation_radius: 1.75 # how much to inflate around the edges ()
     
     ## Config 2: Stay close to the centerline of the track
     cost_scaling_factor: 0.1 # the lower the number, the higher the cost of being the inflation zone, and the avoid it harder

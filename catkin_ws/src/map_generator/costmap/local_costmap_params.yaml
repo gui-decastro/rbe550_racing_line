@@ -16,8 +16,8 @@ local_costmap:
   
   static_map: true
   rolling_window: false
-  width: 100.0
-  height: 100.0
+  # width: 100.0
+  # height: 100.0
   resolution: 0.25
 
   plugins:

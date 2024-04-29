@@ -60,6 +60,8 @@ python3 velocity_plotter.py
 
 ## Running Individual Components
 These files do not need to be ran in isolation, but if there is need to troubleshoot one specific portion of the codebase, follow these steps:
+
+## Running Program
 ### Generate an occupancy grid
 Uses a top down image that is located inside the *racetracks* folder, and converts it into a binary occupancy grid. The output is placed in the *occupancy_grids* folder
 ```

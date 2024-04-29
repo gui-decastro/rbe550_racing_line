@@ -21,7 +21,7 @@ TebLocalPlannerROS:
  max_vel_x: 55 # assuming max speed of 125mph
  max_vel_x_backwards: 0.2
  max_vel_theta: 0.5
- acc_lim_x: 8 # 0 to 60mph in 3 seconds. Acceleration of 8.94m/s^2
+ acc_lim_x: 9 # 0 to 60mph in 3 seconds. Acceleration of 8.94m/s^2
  acc_lim_theta: 1.0 # how quickly the steering rate can change
  min_turning_radius: 2.3 # using 30deg as the max steering angle. Min_Turning_Radius = wheelbase / tan(max_steering_angle_rad) 
  wheelbase: 2.65 # from audibot URDF
@@ -41,7 +41,7 @@ TebLocalPlannerROS:
  min_obstacle_dist: 1.25
  include_costmap_obstacles: True
  costmap_obstacles_behind_robot_dist: 0.1
- obstacle_poses_affected: 5
+ obstacle_poses_affected: 3
  costmap_converter_plugin: ""
  costmap_converter_spin_thread: False
  costmap_converter_rate: 0
@@ -57,9 +57,9 @@ TebLocalPlannerROS:
  weight_acc_lim_x: 5 # Optimization weight for satisfying the maximum allowed translational acceleration
  weight_acc_lim_theta: 1
  weight_kinematics_nh: 1000
- weight_kinematics_forward_drive: 1
+ weight_kinematics_forward_drive: 100
  weight_kinematics_turning_radius: 1
- weight_optimaltime: 10 # Optimization weight for contracting the trajectory w.r.t transition/execution time. Most important param for racing line!
+ weight_optimaltime: 500 # Optimization weight for contracting the trajectory w.r.t transition/execution time. Most important param for racing line!
  weight_obstacle: 50
  weight_dynamic_obstacle: 10 # not in use yet
  alternative_time_cost: False # not in use yet

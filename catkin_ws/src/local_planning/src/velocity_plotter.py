@@ -35,7 +35,7 @@ def plot_velocity_profile(fig, ax_v, ax_omega, ax_accel, t, v, omega, a):
   ax_accel.grid()
   ax_accel.set_ylabel('Acceleration [m/s^2]')
   ax_accel.set_xlabel('Time [s]')
-  ax_accel.plot(t, a, '-bx')
+  ax_accel.plot(t[1:], a, '-bx')
 
   fig.canvas.draw()
 
@@ -52,7 +52,6 @@ def velocity_plotter():
   rospy.loginfo("Make sure to enable rosparam 'publish_feedback' in the teb_local_planner.")
 
   # two subplots sharing the same t axis
-#   fig, (ax_v, ax_omega) = plotter.subplots(2, sharex=True)
   fig, (ax_v, ax_omega, ax_accel) = plotter.subplots(3, sharex=True)
   fig.set_size_inches(8, 6)
   plotter.ion()
@@ -85,13 +84,9 @@ def velocity_plotter():
       v.append(v_curr)
       omega.append(point.velocity.angular.z)
       
-      # avoid dividing by 0 on first iteration
-      if t_curr == 0.0:
-        accel = 0
-      else:
+      if t_curr != 0.0:
         accel = (v_curr - v_prev) / (t_curr - t_prev)
-
-      a.append(accel)
+        a.append(accel)
 
       # update values for next iteration
       t_prev = t_curr
