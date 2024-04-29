@@ -20,9 +20,9 @@ TebLocalPlannerROS:
  cmd_angle_instead_rotvel: True
  max_vel_x: 55 # assuming max speed of 125mph
  max_vel_x_backwards: 0.2
- max_vel_theta: 0.3
+ max_vel_theta: 0.5
  acc_lim_x: 8 # 0 to 60mph in 3 seconds. Acceleration of 8.94m/s^2
- acc_lim_theta: 2 # how quickly the steering rate can change
+ acc_lim_theta: 1.0 # how quickly the steering rate can change
  min_turning_radius: 2.3 # using 30deg as the max steering angle. Min_Turning_Radius = wheelbase / tan(max_steering_angle_rad) 
  wheelbase: 2.65 # from audibot URDF
  footprint_model:
@@ -35,7 +35,7 @@ TebLocalPlannerROS:
  # Goal tolerance parameters
  xy_goal_tolerance: 1
  yaw_goal_tolerance: 0.7
- free_goal_vel: False # Remove the goal velocity constraint such that the robot can arrive at the goal with maximum speed. Should probably be true for this project. Check later
+ free_goal_vel: True # Remove the goal velocity constraint such that the robot can arrive at the goal with maximum speed. Should probably be true for this project. Check later
 
  # Obstacles parameters
  min_obstacle_dist: 1.25
