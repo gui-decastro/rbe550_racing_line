@@ -26,8 +26,11 @@ TebLocalPlannerROS:
  min_turning_radius: 2.3 # using 30deg as the max steering angle. Min_Turning_Radius = wheelbase / tan(max_steering_angle_rad) 
  wheelbase: 2.65 # from audibot URDF
  footprint_model:
-   type: "polygon"
-   vertices: [[4, 1.25], [4, -1.25], [-0.9, -1.25], [-0.9, 1.25]] # closed polygon
+  #  type: "polygon"
+  #  vertices: [[4, 1.25], [4, -1.25], [-0.9, -1.25], [-0.9, 1.25]] # closed polygon
+  type: "line" # computationally advantageous compared to polygon. Polygon should be avoid at all costs for local planner
+  line_start: [0,0] # line_start and line_end define the two points of the line. min_obstacle_distance defines a radius around these two points for the robot to avoid
+  line_end: [3.5, 0]
 
  # Goal tolerance parameters
  xy_goal_tolerance: 1
@@ -35,7 +38,7 @@ TebLocalPlannerROS:
  free_goal_vel: False # Remove the goal velocity constraint such that the robot can arrive at the goal with maximum speed. Should probably be true for this project. Check later
 
  # Obstacles parameters
- min_obstacle_dist: 0.16
+ min_obstacle_dist: 1.25
  include_costmap_obstacles: True
  costmap_obstacles_behind_robot_dist: 0.35
  obstacle_poses_affected: 30
