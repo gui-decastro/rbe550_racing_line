@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="local_planning" type="odom_to_tf.py" name="odom_to_tf" output="screen" />
+  <node pkg="local_planning" type="controller.py" name="controller" output="screen" />
+</launch>
