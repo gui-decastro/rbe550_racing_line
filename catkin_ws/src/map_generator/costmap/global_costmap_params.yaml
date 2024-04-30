@@ -28,4 +28,4 @@ global_costmap:
     
     ## Config 2: Stay close to the centerline of the track
     cost_scaling_factor: 0.1 # the lower the number, the higher the cost of being the inflation zone, and the avoid it harder
-    inflation_radius: 4.0 # how much to inflate around the edges ()
+    inflation_radius: 1.75 # how much to inflate around the edges ()

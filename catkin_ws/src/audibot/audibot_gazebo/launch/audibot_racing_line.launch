@@ -24,6 +24,10 @@
   <node pkg="tf2_ros" type="static_transform_publisher" name="link7_broadcaster" args="-1.326 0.800 0 -0.535 0.462 0.462 0.535 base_link wheel_rl" />
   <node pkg="tf2_ros" type="static_transform_publisher" name="link8_broadcaster" args="-1.326 -0.800 0 -0.572 0.416 0.416 0.572 base_link wheel_rr" />
   
+  <arg name="start_yaw" default="3.14159" />
+  <node pkg="gazebo_ros" type="spawn_model"  name="spawn_audibot" args="-urdf -param robot_description -model audibot -x $(arg start_x) -y $(arg start_y) -z $(arg start_z) -Y $(arg start_yaw)"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+  
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="state_publisher">
     <param name="publish_frequency" type="double" value="$(arg tf_freq)" />
   </node>
